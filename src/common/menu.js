@@ -23,6 +23,25 @@ const menuData = [
     ],
   },
   {
+    name: '采购',
+    icon: 'pay-circle-o',
+    path: 'purchase',
+    children: [
+      {
+        name: '商品列表',
+        path: 'product-list',
+      },
+      {
+        name: '购物车',
+        path: 'shopping-cart',
+      },
+      {
+        name: '收藏商品',
+        path: 'collected',
+      },
+    ],
+  },
+  {
     name: '表单页',
     icon: 'form',
     path: 'form',
