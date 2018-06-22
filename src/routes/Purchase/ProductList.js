@@ -30,10 +30,10 @@ const formatWan = val => {
 
 /* eslint react/no-array-index-key: 0 */
 @Form.create()
-@connect(({ list, loading, purchase }) => ({
+@connect(({ list, purchase, loading }) => ({
   list,
-  loading: loading.models.list,
   purchase,
+  loading: loading.models.list,
 }))
 
 export default class FilterCardList extends PureComponent {
@@ -65,7 +65,8 @@ export default class FilterCardList extends PureComponent {
   };
 
   render() {
-    const { list: { list }, loading, form , purchase } = this.props;
+    console.log(this.props)
+    const { list: {list}, purchase, loading, form  } = this.props;
     const { getFieldDecorator } = form;
 
     const CardInfo = ({ activeUser, newUser }) => (
@@ -136,7 +137,7 @@ export default class FilterCardList extends PureComponent {
                 <Col lg={6} md={10} sm={10} xs={24}>
                   <FormItem {...formItemLayout} label="名称">
                     {getFieldDecorator('product', {
-                      initialValue: '',
+                      initialValue: purchase.search.productName,
                       rules: [{ required: false, message: '请输入商品名称' }],
                     })(<Input placeholder="请输入商品名称" />)}
                   </FormItem>

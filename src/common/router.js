@@ -87,7 +87,7 @@ export const getRouterData = app => {
       // authority: 'admin',
     },
     '/purchase/product-list': {
-      component: dynamicWrapper(app, ['form'], () => import('../routes/Purchase/ProductList')),
+      component: dynamicWrapper(app, ['list','purchase'], () => import('../routes/Purchase/ProductList')),
     },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),

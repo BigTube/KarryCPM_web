@@ -5,7 +5,7 @@ export default {
 
   state: {
     search: {
-      productName: '商品名称',
+      productName: '056扫描枪',
     },
     list: [],
   },
