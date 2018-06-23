@@ -52,11 +52,10 @@ const covers = [
   'https://gw.alipayobjects.com/zos/rmsportal/gLaIAoVWTtLbBWZNYEMg.png',
 ];
 const desc = [
-  '那是一种内在的东西， 他们到达不了，也无法触及的',
-  '希望是一个好东西，也许是最好的，好东西是不会消亡的',
-  '生命就像一盒巧克力，结果往往出人意料',
-  '城镇中有那么多的酒馆，她却偏偏走进了我的酒馆',
-  '那时候我只会想自己想要什么，从不想自己拥有什么',
+  'xxx部门, 办公环境升级, 软硬件升级',
+  '条线拓展',
+  'xxx部门业务扩展采购申请',
+  'xxx项目加急申请申请',
 ];
 
 const user = [
@@ -89,7 +88,7 @@ export function fakeList(count) {
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
       count: 1,
       orderId: 'KMP-00' + Math.ceil(Math.random() * 1000) + 1000,
-      subDescription: desc[i % 5],
+      subDescription: desc[i % 4],
       description:
         '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。',
       serialNumber: Math.random()
