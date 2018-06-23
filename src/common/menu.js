@@ -67,7 +67,7 @@ const menuData = [
     path: 'human',
     children: [
       {
-        name: '导入',
+        name: '导入组织结构',
         path: 'import',
       },
       {
