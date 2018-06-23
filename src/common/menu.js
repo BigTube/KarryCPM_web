@@ -17,8 +17,6 @@ const menuData = [
       {
         name: '工作台',
         path: 'workplace',
-        // hideInBreadcrumb: true,
-        // hideInMenu: true,
       },
     ],
   },
@@ -42,17 +40,35 @@ const menuData = [
     ],
   },
   {
-    name: '表单页',
-    icon: 'form',
+    name: '申购步骤',
+    icon: 'plus-square-o',
     path: 'form',
     children: [
       {
-        name: '基础表单',
-        path: 'basic-form',
-      },
-      {
-        name: '分步表单',
+        name: '申购步骤',
         path: 'step-form',
+      },
+    ],
+  },
+  {
+    name: '审批步骤',
+    icon: 'safety',
+    path: 'list',
+    children: [
+      {
+        name: '采购审批',
+        path: 'basic-list',
+      },
+    ],
+  },
+  {
+    name: 'HR',
+    icon: 'usergroup-add',
+    path: 'form',
+    children: [
+      {
+        name: '导入',
+        path: 'basic-form',
       },
       {
         name: '高级表单',

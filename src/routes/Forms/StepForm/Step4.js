@@ -5,7 +5,7 @@ import { routerRedux } from 'dva/router';
 import Result from 'components/Result';
 import styles from './style.less';
 
-class Step3 extends React.PureComponent {
+class Step4 extends React.PureComponent {
   render() {
     const { dispatch, data } = this.props;
     const onFinish = () => {
@@ -15,25 +15,25 @@ class Step3 extends React.PureComponent {
       <div className={styles.information}>
         <Row>
           <Col span={8} className={styles.label}>
-            付款账户：
+            订单ID:
           </Col>
-          <Col span={16}>{data.payAccount}</Col>
+          <Col span={16}>{data.orderId}</Col>
         </Row>
         <Row>
           <Col span={8} className={styles.label}>
-            收款账户：
+            部门:
           </Col>
-          <Col span={16}>{data.receiverAccount}</Col>
+          <Col span={16}>{data.department}</Col>
         </Row>
         <Row>
           <Col span={8} className={styles.label}>
-            收款人姓名：
+            申请人:
           </Col>
           <Col span={16}>{data.receiverName}</Col>
         </Row>
         <Row>
           <Col span={8} className={styles.label}>
-            转账金额：
+            总金额：
           </Col>
           <Col span={16}>
             <span className={styles.money}>{data.amount}</span> 元
@@ -44,16 +44,15 @@ class Step3 extends React.PureComponent {
     const actions = (
       <Fragment>
         <Button type="primary" onClick={onFinish}>
-          再转一笔
+          再申请一笔
         </Button>
-        <Button>查看账单</Button>
       </Fragment>
     );
     return (
       <Result
         type="success"
         title="操作成功"
-        description="预计两小时内到账"
+        description="预计4天内可以采购成功"
         extra={information}
         actions={actions}
         className={styles.result}
@@ -64,4 +63,4 @@ class Step3 extends React.PureComponent {
 
 export default connect(({ form }) => ({
   data: form.step,
-}))(Step3);
+}))(Step4);

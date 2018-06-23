@@ -70,7 +70,7 @@ export default class BasicList extends PureComponent {
     const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
       <div className={styles.listContent}>
         <div className={styles.listContentItem}>
-          <span>Owner</span>
+          <span>申请人</span>
           <p>{owner}</p>
         </div>
         <div className={styles.listContentItem}>
@@ -90,6 +90,9 @@ export default class BasicList extends PureComponent {
         </Menu.Item>
         <Menu.Item>
           <a>删除</a>
+        </Menu.Item>
+        <Menu.Item>
+          <a>详情</a>
         </Menu.Item>
       </Menu>
     );
@@ -122,14 +125,11 @@ export default class BasicList extends PureComponent {
           <Card
             className={styles.listCard}
             bordered={false}
-            title="标准列表"
+            title="申请单列表"
             style={{ marginTop: 24 }}
             bodyStyle={{ padding: '0 32px 40px 32px' }}
             extra={extraContent}
           >
-            <Button type="dashed" style={{ width: '100%', marginBottom: 8 }} icon="plus">
-              添加
-            </Button>
             <List
               size="large"
               rowKey="id"
@@ -137,10 +137,10 @@ export default class BasicList extends PureComponent {
               pagination={paginationProps}
               dataSource={list}
               renderItem={item => (
-                <List.Item actions={[<a>编辑</a>, <MoreBtn />]}>
+                <List.Item actions={[<Button type="primary">通过</Button>, <Button type="danger">驳回</Button>, <MoreBtn />]}>
                   <List.Item.Meta
                     avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a href={item.href}>{item.title}</a>}
+                    title={<a href={item.href}>单号: {item.orderId}</a>}
                     description={item.subDescription}
                   />
                   <ListContent data={item} />

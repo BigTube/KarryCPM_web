@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider, Select } from 'antd';
+import { Form, Input, DatePicker, Button, Alert, Divider, Select } from 'antd';
 import { routerRedux } from 'dva/router';
 import { digitUppercase } from '../../../utils/utils';
 import styles from './style.less';
+const { TextArea } = Input;
 
 const formItemLayout = {
   labelCol: {
@@ -41,7 +42,12 @@ class Step2 extends React.PureComponent {
     };
     return (
       <Form layout="horizontal" className={styles.stepForm}>
-        <Alert closable showIcon message="申购信息填写后,将不能修改, 请认真填写. " />
+        <Alert
+          closable
+          showIcon
+          message="申购信息填写后,将不能修改, 请认真填写."
+          style={{ marginBottom: '24px' }}
+        />
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="申购人姓名">
           {data.receiverName}
         </Form.Item>
@@ -52,22 +58,43 @@ class Step2 extends React.PureComponent {
           {data.line}
         </Form.Item>
 
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="采购类型">
-          {getFieldDecorator('publicUsers')(
-            <Select
-              mode="multiple"
-              placeholder="公开给"
-              style={{
-                margin: '8px 0',
-                display: getFieldValue('public') === '2' ? 'block' : 'none',
-              }}
-            >
-              <Option value="1">同事甲</Option>
-              <Option value="2">同事乙</Option>
-              <Option value="3">同事丙</Option>
+        <Form.Item {...formItemLayout} label="时间要求">
+          {getFieldDecorator('author', {})(
+            <DatePicker style={{ maxWidth: 200 }} placeholder="时间要求" />
+          )}
+        </Form.Item>
+
+        <Form.Item {...formItemLayout} label="采购类型">
+          {getFieldDecorator('author', {})(
+            <Select onChange={this.handleFormSubmit} placeholder="请选择" style={{ maxWidth: 200 }}>
+              <Option value="1">集中采购</Option>
+              <Option value="2">中央采购</Option>
             </Select>
           )}
         </Form.Item>
+
+        <Form.Item {...formItemLayout} label="固定资产类型">
+          {getFieldDecorator('author', {})(
+            <Select onChange={this.handleFormSubmit} placeholder="请选择" style={{ maxWidth: 200 }}>
+              <Option value="1">IT</Option>
+              <Option value="2">固定</Option>
+            </Select>
+          )}
+        </Form.Item>
+
+        <Form.Item {...formItemLayout} label="采购理由">
+          {getFieldDecorator('client')(<TextArea rows={4} placeholder="采购理由" />)}
+        </Form.Item>
+
+        <Form.Item {...formItemLayout} label="采购建议">
+          {getFieldDecorator('client')(<Input placeholder="采购建议" />)}
+        </Form.Item>
+
+        <Form.Item {...formItemLayout} className={styles.stepFormText} label="总金额">
+          <span className={styles.money}>{data.amount}</span>
+          <span className={styles.uppercase}>（{digitUppercase(data.amount)}）</span>
+        </Form.Item>
+
         <Divider style={{ margin: '24px 0' }} />
 
         <Form.Item
@@ -81,11 +108,12 @@ class Step2 extends React.PureComponent {
           }}
           label=""
         >
+          <Button onClick={onPrev} style={{ marginRight: 10 }}>
+            上一步
+          </Button>
+
           <Button type="primary" onClick={onNext} loading={submitting}>
             下一步
-          </Button>
-          <Button onClick={onPrev} style={{ marginLeft: 8 }}>
-            上一步
           </Button>
         </Form.Item>
       </Form>
