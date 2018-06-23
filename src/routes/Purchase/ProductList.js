@@ -1,12 +1,27 @@
 import React, { PureComponent } from 'react';
 import numeral from 'numeral';
 import { connect } from 'dva';
-import { Row, Col, Input, Form, Card, Select, Icon, Avatar, List, Tooltip, Dropdown, Menu, Button } from 'antd';
+import {
+  Row,
+  Col,
+  Input,
+  Form,
+  Card,
+  Select,
+  Icon,
+  Avatar,
+  List,
+  Tooltip,
+  Dropdown,
+  Menu,
+  Button,
+} from 'antd';
 
 import TagSelect from 'components/TagSelect';
 import StandardFormRow from 'components/StandardFormRow';
 
 import styles from './ProductList.less';
+import { routerRedux } from 'dva/router';
 
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -35,13 +50,12 @@ const formatWan = val => {
   purchase,
   loading: loading.models.list,
 }))
-
 export default class FilterCardList extends PureComponent {
   componentDidMount() {
     this.props.dispatch({
       type: 'list/fetch',
       payload: {
-        count: 8,
+        count: 12,
       },
     });
   }
@@ -65,19 +79,19 @@ export default class FilterCardList extends PureComponent {
   };
 
   render() {
-    console.log(this.props)
-    const { list: {list}, purchase, loading, form  } = this.props;
+    const { list: { list }, purchase, loading, form, dispatch } = this.props;
+
     const { getFieldDecorator } = form;
 
-    const CardInfo = ({ activeUser, newUser }) => (
+    const CardInfo = ({ serialNumber, newUser }) => (
       <div className={styles.cardInfo}>
         <div>
-          <p>活跃用户</p>
-          <p>{activeUser}</p>
-        </div>
-        <div>
-          <p>新增用户</p>
-          <p>{newUser}</p>
+          <p>
+            价格: <span className={styles.price}>{newUser}</span>元
+          </p>
+          <p>
+            型号: <span>{serialNumber}</span>
+          </p>
         </div>
       </div>
     );
@@ -90,8 +104,8 @@ export default class FilterCardList extends PureComponent {
     };
 
     const goSearch = () => {
-      console.log('search')
-    }
+      console.log('search');
+    };
 
     const itemMenu = (
       <Menu>
@@ -134,7 +148,7 @@ export default class FilterCardList extends PureComponent {
             </StandardFormRow>
             <StandardFormRow title="筛选" grid last>
               <Row gutter={16}>
-                <Col lg={6} md={10} sm={10} xs={24}>
+                <Col lg={8} md={8} sm={8} xs={24}>
                   <FormItem {...formItemLayout} label="名称">
                     {getFieldDecorator('product', {
                       initialValue: purchase.search.productName,
@@ -142,7 +156,7 @@ export default class FilterCardList extends PureComponent {
                     })(<Input placeholder="请输入商品名称" />)}
                   </FormItem>
                 </Col>
-                <Col lg={6} md={10} sm={10} xs={24}>
+                <Col lg={8} md={8} sm={8} xs={24}>
                   <FormItem {...formItemLayout} label="供应商">
                     {getFieldDecorator('author', {})(
                       <Select
@@ -157,21 +171,7 @@ export default class FilterCardList extends PureComponent {
                     )}
                   </FormItem>
                 </Col>
-                <Col lg={6} md={10} sm={10} xs={24}>
-                  <FormItem {...formItemLayout} label="好评度">
-                    {getFieldDecorator('rate', {})(
-                      <Select
-                        onChange={this.handleFormSubmit}
-                        placeholder="不限"
-                        style={{ maxWidth: 200, width: '100%' }}
-                      >
-                        <Option value="good">优秀</Option>
-                        <Option value="normal">普通</Option>
-                      </Select>
-                    )}
-                  </FormItem>
-                </Col>
-                <Col lg={6} md={10} sm={10} xs={24}>
+                <Col lg={6} md={6} sm={6} xs={24}>
                   <Button type="primary" onClick={goSearch}>
                     搜索
                   </Button>
@@ -192,24 +192,18 @@ export default class FilterCardList extends PureComponent {
                 hoverable
                 bodyStyle={{ paddingBottom: 20 }}
                 actions={[
-                  <Tooltip title="下载">
-                    <Icon type="download" />
+                  <Tooltip title="收藏">
+                    <Icon type="plus-square-o" />
                   </Tooltip>,
-                  <Tooltip title="编辑">
-                    <Icon type="edit" />
+                  <Tooltip title="加入购物车">
+                    <Icon type="shopping-cart" />
                   </Tooltip>,
-                  <Tooltip title="分享">
-                    <Icon type="share-alt" />
-                  </Tooltip>,
-                  <Dropdown overlay={itemMenu}>
-                    <Icon type="ellipsis" />
-                  </Dropdown>,
                 ]}
               >
-                <Card.Meta avatar={<Avatar size="small" src={item.avatar} />} title={item.title} />
+                <Card.Meta avatar={<Avatar size="big" src={item.avatar} />} title={item.title} />
                 <div className={styles.cardItemContent}>
                   <CardInfo
-                    activeUser={formatWan(item.activeUser)}
+                    serialNumber={item.serialNumber}
                     newUser={numeral(item.newUser).format('0,0')}
                   />
                 </div>

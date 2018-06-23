@@ -18,6 +18,28 @@
       max-width: 100%;
     }
   }
+  .cardInfoShoppingCart {
+    .clearfix();
+    margin-top: 16px;
+    margin-left: 40px;
+    & > div {
+      position: relative;
+      text-align: left;
+      float: left;
+      width: 100%;
+      .price{
+        line-height: 24px;
+        font-size: 16px;
+        margin: 0;
+      }
+      p {
+        color: @text-color-secondary;
+        font-size: 12px;
+        line-height: 20px;
+        margin-bottom: 4px;
+      }
+    }
+  }
   .cardInfo {
     .clearfix();
     margin-top: 16px;
@@ -26,13 +48,13 @@
       position: relative;
       text-align: left;
       float: left;
-      width: 50%;
-      p {
-        line-height: 32px;
-        font-size: 24px;
+      width: 100%;
+      .price{
+        line-height: 24px;
+        font-size: 16px;
         margin: 0;
       }
-      p:first-child {
+      p {
         color: @text-color-secondary;
         font-size: 12px;
         line-height: 20px;

@@ -1,26 +1,37 @@
 import { parse } from 'url';
 
 const titles = [
-  'Alipay',
-  'Angular',
-  'Ant Design',
-  'Ant Design Pro',
-  'Bootstrap',
-  'React',
-  'Vue',
-  'Webpack',
-];
-const avatars = [
-  'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png', // Alipay
-  'https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png', // Angular
-  'https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png', // Ant Design
-  'https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png', // Ant Design Pro
-  'https://gw.alipayobjects.com/zos/rmsportal/siCrBXXhmvTQGWPNLBow.png', // Bootstrap
-  'https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png', // React
-  'https://gw.alipayobjects.com/zos/rmsportal/ComBAopevLwENQdKWiIn.png', // Vue
-  'https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png', // Webpack
+  'Beats耳机',
+  '蓝牙音箱',
+  '包装箱',
+  '文件袋',
+  '二维码扫描枪',
+  'iPad Air',
+  'iMac Pro',
+  'TrackPad',
+  '便携音箱',
+  'iWatch',
+  'MacBookPro',
+  'MacBook',
 ];
 
+// 产品
+const avatars = [
+  '/products/pro_1.png', // Alipay
+  '/products/pro_2.png', // Angular
+  '/products/pro_3.png', // Ant Design
+  '/products/pro_4.png', // Ant Design Pro
+  '/products/pro_5.png', // Bootstrap
+  '/products/pro_6.png', // React
+  '/products/pro_7.png', // Vue
+  '/products/pro_8.png', // Webpack
+  '/products/pro_9.png', // Webpack
+  '/products/pro_10.png', // Webpack
+  '/products/pro_11.png', // Webpack
+  '/products/pro_12.png', // Webpack
+];
+
+// 头像
 const avatars2 = [
   'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
   'https://gw.alipayobjects.com/zos/rmsportal/cnrhVkzwxjPwAaCfPbdc.png',
@@ -67,20 +78,24 @@ export function fakeList(count) {
     list.push({
       id: `fake-list-${i}`,
       owner: user[i % 10],
-      title: titles[i % 8],
-      avatar: avatars[i % 8],
+      title: titles[i % 12],
+      avatar: avatars[i % 12],
       cover: parseInt(i / 4, 10) % 2 === 0 ? covers[i % 4] : covers[3 - i % 4],
       status: ['active', 'exception', 'normal'][i % 3],
       percent: Math.ceil(Math.random() * 50) + 50,
-      logo: avatars[i % 8],
+      logo: avatars[i % 12],
       href: 'https://ant.design',
       updatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
       subDescription: desc[i % 5],
       description:
         '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。',
-      activeUser: Math.ceil(Math.random() * 100000) + 100000,
+      serialNumber: Math.random()
+        .toString(36)
+        .substr(2)
+        .slice(0, 6),
       newUser: Math.ceil(Math.random() * 1000) + 1000,
+      price: Math.ceil(Math.random() * 1000) + 1000,
       star: Math.ceil(Math.random() * 100) + 100,
       like: Math.ceil(Math.random() * 100) + 100,
       message: Math.ceil(Math.random() * 10) + 10,
