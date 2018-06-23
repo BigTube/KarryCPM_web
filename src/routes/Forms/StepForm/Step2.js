@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Alert, Divider } from 'antd';
+import { Form, Input, Button, Alert, Divider, Select } from 'antd';
 import { routerRedux } from 'dva/router';
 import { digitUppercase } from '../../../utils/utils';
 import styles from './style.less';
@@ -22,6 +22,9 @@ class Step2 extends React.PureComponent {
     const onPrev = () => {
       dispatch(routerRedux.push('/form/step-form'));
     };
+    const onNext = () => {
+      dispatch(routerRedux.push('/form/step-form/budget'));
+    };
     const onValidateForm = e => {
       e.preventDefault();
       validateFields((err, values) => {
@@ -38,37 +41,35 @@ class Step2 extends React.PureComponent {
     };
     return (
       <Form layout="horizontal" className={styles.stepForm}>
-        <Alert
-          closable
-          showIcon
-          message="确认转账后，资金将直接打入对方账户，无法退回。"
-          style={{ marginBottom: 24 }}
-        />
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="付款账户">
-          {data.payAccount}
-        </Form.Item>
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="收款账户">
-          {data.receiverAccount}
-        </Form.Item>
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="收款人姓名">
+        <Alert closable showIcon message="申购信息填写后,将不能修改, 请认真填写. " />
+        <Form.Item {...formItemLayout} className={styles.stepFormText} label="申购人姓名">
           {data.receiverName}
         </Form.Item>
-        <Form.Item {...formItemLayout} className={styles.stepFormText} label="转账金额">
-          <span className={styles.money}>{data.amount}</span>
-          <span className={styles.uppercase}>（{digitUppercase(data.amount)}）</span>
+        <Form.Item {...formItemLayout} className={styles.stepFormText} label="申购部门">
+          {data.department}
+        </Form.Item>
+        <Form.Item {...formItemLayout} className={styles.stepFormText} label="条线">
+          {data.line}
+        </Form.Item>
+
+        <Form.Item {...formItemLayout} className={styles.stepFormText} label="采购类型">
+          {getFieldDecorator('publicUsers')(
+            <Select
+              mode="multiple"
+              placeholder="公开给"
+              style={{
+                margin: '8px 0',
+                display: getFieldValue('public') === '2' ? 'block' : 'none',
+              }}
+            >
+              <Option value="1">同事甲</Option>
+              <Option value="2">同事乙</Option>
+              <Option value="3">同事丙</Option>
+            </Select>
+          )}
         </Form.Item>
         <Divider style={{ margin: '24px 0' }} />
-        <Form.Item {...formItemLayout} label="支付密码" required={false}>
-          {getFieldDecorator('password', {
-            initialValue: '123456',
-            rules: [
-              {
-                required: true,
-                message: '需要支付密码才能进行支付',
-              },
-            ],
-          })(<Input type="password" autoComplete="off" style={{ width: '80%' }} />)}
-        </Form.Item>
+
         <Form.Item
           style={{ marginBottom: 8 }}
           wrapperCol={{
@@ -80,8 +81,8 @@ class Step2 extends React.PureComponent {
           }}
           label=""
         >
-          <Button type="primary" onClick={onValidateForm} loading={submitting}>
-            提交
+          <Button type="primary" onClick={onNext} loading={submitting}>
+            下一步
           </Button>
           <Button onClick={onPrev} style={{ marginLeft: 8 }}>
             上一步

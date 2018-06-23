@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'dva';
-import { Form, Input, Button, Select, Divider } from 'antd';
+import { Form, Input, Button, Avatar, Select, Divider, Card, List, Checkbox } from 'antd';
 import { routerRedux } from 'dva/router';
 import styles from './style.less';
 
@@ -17,8 +17,37 @@ const formItemLayout = {
 
 @Form.create()
 class Step1 extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      amount: 7800,
+    };
+    this.calcAmount.bind(this);
+  }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'list/fetch',
+      payload: {
+        count: 6,
+      },
+    });
+  }
+  calcAmount(e, id) {
+    const { list: { list } } = this.props;
+    if (!e.target.value) return;
+    let amount = 0;
+    list.forEach(element => {
+      let count = element.id === id ? e.target.value : element.count;
+      amount += element.price * parseInt(count);
+    });
+    this.setState({
+      amount,
+    });
+  }
+
   render() {
-    const { form, dispatch, data } = this.props;
+    const { list: { list }, form, dispatch, data, loading } = this.props;
     const { getFieldDecorator, validateFields } = form;
     const onValidateForm = () => {
       validateFields((err, values) => {
@@ -31,43 +60,50 @@ class Step1 extends React.PureComponent {
         }
       });
     };
+
     return (
       <Fragment>
-        <Form layout="horizontal" className={styles.stepForm} hideRequiredMark>
-          <Form.Item {...formItemLayout} label="付款账户">
-            {getFieldDecorator('payAccount', {
-              initialValue: data.payAccount,
-              rules: [{ required: true, message: '请选择付款账户' }],
-            })(
-              <Select placeholder="test@example.com">
-                <Option value="ant-design@alipay.com">ant-design@alipay.com</Option>
-              </Select>
+        <Card title="商品列表" bordered={false}>
+          <List
+            rowKey="id"
+            itemLayout="horizontal"
+            grid={{ gutter: 24, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
+            loading={loading}
+            dataSource={list}
+            renderItem={item => (
+              <List.Item key={item.id} style={{ padding: 10 }} actions={[<a>删除</a>]}>
+                <List.Item.Meta
+                  avatar={<Avatar size="small" src={item.avatar} />}
+                  title={
+                    <a href="#">
+                      {item.title} [ 型号: {item.serialNumber} ]
+                    </a>
+                  }
+                  description={
+                    <span>
+                      单价:{item.price} - 配置: {item.detail}{' '}
+                    </span>
+                  }
+                />
+                <Input
+                  addonBefore="数量"
+                  onChange={e => {
+                    this.calcAmount(e, item.id);
+                  }}
+                  style={{ width: 120 }}
+                  defaultValue={item.count}
+                />
+              </List.Item>
             )}
-          </Form.Item>
-          <Form.Item {...formItemLayout} label="收款账户">
-            <Input.Group compact>
-              <Select defaultValue="alipay" style={{ width: 100 }}>
-                <Option value="alipay">支付宝</Option>
-                <Option value="bank">银行账户</Option>
-              </Select>
-              {getFieldDecorator('receiverAccount', {
-                initialValue: data.receiverAccount,
-                rules: [
-                  { required: true, message: '请输入收款人账户' },
-                  { type: 'email', message: '账户名应为邮箱格式' },
-                ],
-              })(<Input style={{ width: 'calc(100% - 100px)' }} placeholder="test@example.com" />)}
-            </Input.Group>
-          </Form.Item>
-          <Form.Item {...formItemLayout} label="收款人姓名">
-            {getFieldDecorator('receiverName', {
-              initialValue: data.receiverName,
-              rules: [{ required: true, message: '请输入收款人姓名' }],
-            })(<Input placeholder="请输入收款人姓名" />)}
-          </Form.Item>
-          <Form.Item {...formItemLayout} label="转账金额">
+          />
+        </Card>
+
+        <Divider style={{ margin: '10px 0' }} />
+
+        <Form layout="horizontal" className={styles.stepForm} hideRequiredMark>
+          <Form.Item {...formItemLayout} label="商品总计">
             {getFieldDecorator('amount', {
-              initialValue: data.amount,
+              initialValue: this.state.amount,
               rules: [
                 { required: true, message: '请输入转账金额' },
                 {
@@ -76,6 +112,9 @@ class Step1 extends React.PureComponent {
                 },
               ],
             })(<Input prefix="￥" placeholder="请输入金额" />)}
+          </Form.Item>
+          <Form.Item {...formItemLayout} className={styles.stepFormText} label="申购人姓名">
+            {data.receiverName}
           </Form.Item>
           <Form.Item
             wrapperCol={{
@@ -92,23 +131,13 @@ class Step1 extends React.PureComponent {
             </Button>
           </Form.Item>
         </Form>
-        <Divider style={{ margin: '40px 0 24px' }} />
-        <div className={styles.desc}>
-          <h3>说明</h3>
-          <h4>转账到支付宝账户</h4>
-          <p>
-            如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。
-          </p>
-          <h4>转账到银行卡</h4>
-          <p>
-            如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。
-          </p>
-        </div>
       </Fragment>
     );
   }
 }
 
-export default connect(({ form }) => ({
+export default connect(({ list, form, loading }) => ({
+  list,
   data: form.step,
+  loading: loading.models.list,
 }))(Step1);

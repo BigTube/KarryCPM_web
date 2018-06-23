@@ -9,8 +9,10 @@ export default {
     step: {
       payAccount: 'ant-design@alipay.com',
       receiverAccount: 'test@example.com',
-      receiverName: 'Alex',
-      amount: '500',
+      receiverName: '王小英',
+      amount: '6500',
+      department: '东区-上海分公司-仓库操作部',
+      line: '综合物流条线',
     },
   },
 
