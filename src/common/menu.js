@@ -64,16 +64,15 @@ const menuData = [
   {
     name: 'HR',
     icon: 'usergroup-add',
-    path: 'form',
+    path: 'human',
     children: [
       {
         name: '导入',
-        path: 'basic-form',
+        path: 'import',
       },
       {
-        name: '高级表单',
-        authority: 'admin',
-        path: 'advanced-form',
+        name: '组织架构',
+        path: 'tree',
       },
     ],
   },
