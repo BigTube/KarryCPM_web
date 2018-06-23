@@ -16,8 +16,6 @@ class Step1 extends React.PureComponent {
 
     render() {
       const {  dispatch } = this.props;
-
-      debugger;
         const uploadprops = {
             name: 'file',
             action: '//jsonplaceholder.typicode.com/posts/',
