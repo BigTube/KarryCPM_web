@@ -24,7 +24,7 @@ class Step1 extends React.PureComponent {
     const { dispatch } = this.props;
     const architecture = [
       {
-        title: "无锡片区", child: [
+        title: "无锡片区", key: '0-0-0', child: [
           { title: '常州分公司' },
           { title: '泰州分公司' },
           { title: '嘉兴分公司' },
@@ -33,7 +33,7 @@ class Step1 extends React.PureComponent {
         ]
       },
       {
-        title: "河南及湖北片区", child: [
+        title: "河南及湖北片区", key: '0-1-0', child: [
           { title: '襄阳分公司' },
           { title: '宜昌分公司' },
           { title: '洛阳分公司' },
@@ -76,22 +76,23 @@ class Step1 extends React.PureComponent {
       <Fragment>
         <Tree
           checkable
-          // defaultExpandedKeys={['0-0-0', '0-0-1']}
+          defaultExpandedKeys={['0-0-0', '0-1-0']}
           // defaultSelectedKeys={['0-0-0', '0-0-1']}
           // defaultCheckedKeys={['0-0-0', '0-0-1']}
           onSelect={this.onSelect}
           onCheck={this.onCheck}
         >
           {
-            architecture.map((node, i) => {
+            architecture.map((node) => {
               return (
-                <TreeNode key={i} title={node.title}>
+                <TreeNode key={node.key} title={node.title}>
                   {node.child.map(cnode => {
-                    return <TreeNode key={i} title={
+                    return (<TreeNode title={
                       <div>{cnode.title}
                         <span style={{ color: '#1890ff' }}> <a>导出</a> - <a>编辑</a> -  <a>删除</a> </span>
                       </div>
-                    } />
+                    } >
+                    </TreeNode>)
                   })}
                 </TreeNode>
               )
