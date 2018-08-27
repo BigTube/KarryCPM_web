@@ -81,7 +81,7 @@ class Step1 extends React.PureComponent {
                   }
                   description={
                     <span>
-                      单价:{item.price} - 配置: {item.detail}{' '}
+                      单价:{item.priceStr} - 配置: {item.detail}{' '}
                     </span>
                   }
                 />

@@ -14,10 +14,10 @@ const menuData = [
         name: '购物车',
         path: 'shopping-cart',
       },
-      {
-        name: '收藏商品',
-        path: 'collected',
-      },
+      // {
+      //   name: '收藏商品',
+      //   path: 'collected',
+      // },
     ],
   },
   {

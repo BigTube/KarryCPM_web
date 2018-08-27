@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import numeral from 'numeral';
 import { connect } from 'dva';
-import { Row, Col, Input, Form, Card, Select, Icon, Avatar, List, Tooltip, Dropdown, Menu, Button, Checkbox } from 'antd';
+import { Row, Col, Input, Form, Card, Modal,Select, Icon, Avatar, List, Tooltip, Dropdown, Menu, Button, Checkbox } from 'antd';
 
 import TagSelect from 'components/TagSelect';
 import StandardFormRow from 'components/StandardFormRow';
@@ -53,8 +53,28 @@ export default class FilterCardList extends PureComponent {
     // setTimeout 用于保证获取表单值是在所有表单字段更新完毕的时候
     setTimeout(() => {
       dispatch(routerRedux.push('/form/step-form/info'));
-    }, 0);
+    }, 100);
   };
+
+  showModal = () => {
+    Modal.confirm({
+      title: '提示',
+      content: '加入收藏成功',
+      okText: '确认',
+      cancelText: '取消',
+    });
+  }
+  showDeleteModal = () => {
+    Modal.confirm({
+      title: '删除',
+      content: '是否从购物车中删除',
+      okText: '确认',
+      cancelText: '取消',
+    });
+  }
+
+  
+
 
   render() {
     console.log(this.props)
@@ -95,12 +115,12 @@ export default class FilterCardList extends PureComponent {
           renderItem={item => (
             <List.Item key={item.id}
               style={{ padding: 12, borderBottom: '1px solid #ccc' }} 
-              actions={[<Checkbox>选择</Checkbox>, <a>删除</a>, <a>加入收藏</a>]}  
+              actions={[<Checkbox>选择</Checkbox>, <a onClick={this.showDeleteModal}>删除</a>, <a onClick={this.showModal}>加入收藏</a>]}  
             >
               <List.Item.Meta
                 avatar={<Avatar size="large" src={item.avatar} />}
                 title={<a href="#">{item.title}</a>}
-                description={<span>价格:{item.price} -  型号:{item.serialNumber} </span>}
+                description={<span>价格:{item.priceStr} -  型号:{item.serialNumber} </span>}
               />
               
               <Input addonBefore="数量" style={{ width: 100 }} defaultValue={3} />
@@ -110,7 +130,7 @@ export default class FilterCardList extends PureComponent {
 
         <div style={{ marginTop: 32 }}>
           <Button type="primary" htmlType="submit" onClick={this.handleFormSubmit} size="large">
-            提单
+            发起采购申请
           </Button>
         </div>
 

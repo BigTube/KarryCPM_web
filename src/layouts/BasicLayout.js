@@ -115,7 +115,7 @@ class BasicLayout extends React.PureComponent {
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
-    let title = 'Ant Design Pro';
+    let title = '嘉里大通物流-中央采购系统';
     let currRouterData = null;
     // match params path
     Object.keys(routerData).forEach(key => {
@@ -124,7 +124,7 @@ class BasicLayout extends React.PureComponent {
       }
     });
     if (currRouterData && currRouterData.name) {
-      title = `${currRouterData.name} - Ant Design Pro`;
+      title = `${currRouterData.name} - 嘉里大通物流-中央采购系统`;
     }
     return title;
   }

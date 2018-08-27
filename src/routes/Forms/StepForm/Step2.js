@@ -17,6 +17,12 @@ const formItemLayout = {
 
 @Form.create()
 class Step2 extends React.PureComponent {
+  handleFormSubmit = e => {};
+
+  onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
+
   render() {
     const { form, data, dispatch, submitting } = this.props;
     const { getFieldDecorator, validateFields } = form;
@@ -60,26 +66,22 @@ class Step2 extends React.PureComponent {
 
         <Form.Item {...formItemLayout} label="时间要求">
           {getFieldDecorator('author', {})(
-            <DatePicker style={{ maxWidth: 200 }} placeholder="时间要求" />
+            <DatePicker style={{ maxWidth: 200 }} onChange={this.onChange} placeholder="时间要求" />
           )}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="采购类型">
-          {getFieldDecorator('author', {})(
-            <Select onChange={this.handleFormSubmit} placeholder="请选择" style={{ maxWidth: 200 }}>
-              <Option value="1">集中采购</Option>
-              <Option value="2">中央采购</Option>
-            </Select>
-          )}
+          <Select onChange={this.handleFormSubmit} placeholder="请选择" style={{ maxWidth: 200 }}>
+            <Option value="1">集中采购</Option>
+            <Option value="2">中央采购</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="固定资产类型">
-          {getFieldDecorator('author', {})(
-            <Select onChange={this.handleFormSubmit} placeholder="请选择" style={{ maxWidth: 200 }}>
-              <Option value="1">IT</Option>
-              <Option value="2">固定</Option>
-            </Select>
-          )}
+          <Select onChange={this.handleFormSubmit} placeholder="请选择" style={{ maxWidth: 200 }}>
+            <Option value="1">IT</Option>
+            <Option value="2">固定</Option>
+          </Select>
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="采购理由">
@@ -87,7 +89,7 @@ class Step2 extends React.PureComponent {
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="采购建议">
-          {getFieldDecorator('client')(<Input placeholder="采购建议" />)}
+          {getFieldDecorator('client2')(<Input placeholder="采购建议" />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} className={styles.stepFormText} label="总金额">

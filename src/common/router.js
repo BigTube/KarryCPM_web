@@ -72,6 +72,11 @@ export const getRouterData = app => {
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
+    '/purchase/product-list': {
+      component: dynamicWrapper(app, ['list', 'purchase'], () =>
+        import('../routes/Purchase/ProductList')
+      ),
+    },
     '/dashboard/analysis': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
     },
@@ -86,11 +91,7 @@ export const getRouterData = app => {
       // name: '工作台',
       // authority: 'admin',
     },
-    '/purchase/product-list': {
-      component: dynamicWrapper(app, ['list', 'purchase'], () =>
-        import('../routes/Purchase/ProductList')
-      ),
-    },
+
     '/purchase/shopping-cart': {
       component: dynamicWrapper(app, ['list', 'purchase'], () =>
         import('../routes/Purchase/ShoppingCart')

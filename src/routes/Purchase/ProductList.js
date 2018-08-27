@@ -13,6 +13,9 @@ import {
   List,
   Tooltip,
   Dropdown,
+  Modal,
+  Popconfirm,
+  message,
   Menu,
   Button,
 } from 'antd';
@@ -76,6 +79,13 @@ export default class FilterCardList extends PureComponent {
         }
       });
     }, 0);
+  };
+
+  handleCollect = () => {
+    message.success('加入收藏成功');
+  };
+  handleCart = () => {
+    message.success('加入购物车成功');
   };
 
   render() {
@@ -193,10 +203,10 @@ export default class FilterCardList extends PureComponent {
                 bodyStyle={{ paddingBottom: 20 }}
                 actions={[
                   <Tooltip title="收藏">
-                    <Icon type="plus-square-o" />
+                    <Icon type="plus-square-o" onClick={this.handleCollect} />
                   </Tooltip>,
                   <Tooltip title="加入购物车">
-                    <Icon type="shopping-cart" />
+                    <Icon type="shopping-cart" onClick={this.handleCart} />
                   </Tooltip>,
                 ]}
               >
